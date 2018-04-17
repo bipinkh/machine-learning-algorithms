@@ -47,11 +47,11 @@ def pla(trainDataSet, labelSet, op_file):
     visualize(trainDataSet, labelSet, weightVector)
 
     # Printing the weights in the output_file
-    for w in weightVector:
+    for w in weightsList:
         with open(op_file, 'a', newline='') as csvfile:
             fieldnames = ['weight_X', 'weight_B', 'weight_intercept']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writerow({'w_A': w[0], 'w_B': w[1], 'w_intercept': w[2]})
+            writer.writerow({'weight_X': w[0], 'weight_B': w[1], 'weight_intercept': w[2]})
     csvfile.close()
 
     return "SUCCESS"

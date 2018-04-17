@@ -1,9 +1,8 @@
  ### file is supposed to be launched this way
- #  python3 problem1.py input1.csv output1.csv
+ #  python3 problem1_3.py input1.csv output1.csv
 
 import sys
 import numpy as np
-import os
 
 from perceptron.PerceptronLearning import pla
 

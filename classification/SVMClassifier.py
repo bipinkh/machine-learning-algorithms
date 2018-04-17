@@ -1,12 +1,14 @@
 
-from sklearn.model_selection import StratifiedShuffleSplit, GridSearchCV
-from sklearn.metrics import accuracy_score
-import numpy as np
 import csv
-from .ClassifierProperties import classifier_dictionary
+
+import numpy as np
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import StratifiedShuffleSplit, GridSearchCV
+
+from .ClassifierProperties import classifier_list
 
 
-def SVM(X, Y, output_file="output.csv"):
+def SVM(X, Y, output_file):
 
     names = []          #list to hold all the names
     best_scores =[]     #list to hold all the train scores
@@ -24,12 +26,11 @@ def SVM(X, Y, output_file="output.csv"):
     X_test = scale(X_test)
 
     # implement all the classifier available
-
-    for key in classifier_dictionary.keys():
+    for classifier in classifier_list:
 
         # get kernels and the parameters
-        svr = classifier_dictionary[key]["svr"]
-        parameters = classifier_dictionary[key]["parameters"]
+        svr = classifier["svr"]
+        parameters = classifier["parameters"]
 
         # train the classifier
         model = GridSearchCV(svr, parameters, cv=5)
@@ -44,13 +45,13 @@ def SVM(X, Y, output_file="output.csv"):
         best_score = accuracy_score(trainDataPrediction, Y_train)
 
         #record the result
-        names.append(key)
+        names.append(classifier["name"])
         best_scores.append(best_score)
         test_scores.append(test_score)
 
 
     #write output to the file
-    with open(output_file, 'w', newline='') as csvfile:
+    with open(output_file, 'a', newline='') as csvfile:
         fieldnames = ['name', 'best_score', 'test_score']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
